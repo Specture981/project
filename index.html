@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartToolBox</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fff;
+            margin: 0;
+        }
+        .header {
+            background-color: #8B4F0F;
+            padding: 15px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .toolbar {
+            background-color: #8B4F0F;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .toolbar button {
+            background-color: #E0A45E;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .toolbar button:hover {
+            background-color: #d48f47;
+        }
+        .tool-title {
+            background-color: #8B4F0F;
+            color: white;
+            font-size: 20px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .tool-container {
+            background-color: #ddd;
+            width: 80%;
+            height: 400px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #000;
+            flex-direction: column;
+        }
+        input, button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">SmartToolBox</div>
+    <div class="toolbar">
+        <button onclick="selectTool('calculator')">Калькулятор</button>
+        <button onclick="selectTool('timer')">Таймер</button>
+        <button onclick="selectTool('stopwatch')">Секундомер</button>
+        <button onclick="selectTool('cps')">CPS тест</button>
+        <button onclick="selectTool('counter')">Счетчик</button>
+        <button onclick="selectTool('converter')">Конвертер валют</button>
+        <button onclick="selectTool('generator')">Генератор чисел</button>
+    </div>
+    <div class="tool-title" id="tool-title">(название выбранного инструмента)</div>
+    <div class="tool-container" id="tool-container">(Сам инструмент)</div>
+    
+    <script>
+        let timerInterval;
+        let stopwatchInterval;
+        let stopwatchTime = 0;
+        let cpsCount = 0;
+        let cpsStart = false;
+        
+        function selectTool(tool) {
+            document.getElementById('tool-title').innerText = tool;
+            const container = document.getElementById('tool-container');
+            
+            if (tool === 'calculator') {
+                container.innerHTML = '<input id="calcInput" type="text" readonly><br>' +
+                    '<button onclick="calculate(1)">1</button><button onclick="calculate(2)">2</button>' +
+                    '<button onclick="calculate(3)">3</button><button onclick="calculate(\'+\')">+</button><br>' +
+                    '<button onclick="calculate(4)">4</button><button onclick="calculate(5)">5</button>' +
+                    '<button onclick="calculate(6)">6</button><button onclick="calculate(\'-\')">-</button><br>' +
+                    '<button onclick="calculate(7)">7</button><button onclick="calculate(8)">8</button>' +
+                    '<button onclick="calculate(9)">9</button><button onclick="calculate(\'*\')">*</button><br>' +
+                    '<button onclick="calculate(0)">0</button><button onclick="calculate(\'/\')">/</button>' +
+                    '<button onclick="clearCalc()">C</button><button onclick="evalCalc()">=</button>';
+            } else if (tool === 'counter') {
+                container.innerHTML = '<span id="count">0</span><br>' +
+                    '<button onclick="changeCount(1)">+1</button>' +
+                    '<button onclick="changeCount(-1)">-1</button>';
+            } else if (tool === 'timer') {
+                container.innerHTML = '<input id="timerInput" type="number" placeholder="Секунды"><br>' +
+                    '<button onclick="startTimer()">Старт</button>';
+            } else if (tool === 'stopwatch') {
+                container.innerHTML = '<span id="stopwatch">0</span><br>' +
+                    '<button onclick="startStopwatch()">Старт</button>' +
+                    '<button onclick="resetStopwatch()">Сброс</button>';
+            } else if (tool === 'cps') {
+                container.innerHTML = '<span id="cpsCount">0</span><br>' +
+                    '<button onclick="startCpsTest()">Кликни</button>';
+            } else if (tool === 'generator') {
+                container.innerHTML = '<input id="genMin" type="number" placeholder="Мин"><input id="genMax" type="number" placeholder="Макс"><br>' +
+                    '<button onclick="generateNumber()">Сгенерировать</button><br>' +
+                    '<span id="genResult"></span>';
+            }
+        }
+
+        function startTimer() {
+            let seconds = parseInt(document.getElementById('timerInput').value);
+            timerInterval = setInterval(() => {
+                if (seconds > 0) {
+                    document.getElementById('tool-container').innerHTML = seconds;
+                    seconds--;
+                } else {
+                    clearInterval(timerInterval);
+                    alert('Время вышло!');
+                }
+            }, 1000);
+        }
+        
+        function startStopwatch() {
+            stopwatchInterval = setInterval(() => {
+                stopwatchTime++;
+                document.getElementById('stopwatch').innerText = stopwatchTime;
+            }, 1000);
+        }
+        function resetStopwatch() {
+            clearInterval(stopwatchInterval);
+            stopwatchTime = 0;
+            document.getElementById('stopwatch').innerText = '0';
+        }
+        
+        function startCpsTest() {
+            if (!cpsStart) {
+                cpsStart = true;
+                cpsCount = 0;
+                setTimeout(() => {
+                    cpsStart = false;
+                    alert(`Ваш CPS: ${cpsCount / 5}`);
+                }, 5000);
+            }
+            cpsCount++;
+            document.getElementById('cpsCount').innerText = cpsCount;
+        }
+
+        function generateNumber() {
+            let min = parseInt(document.getElementById('genMin').value);
+            let max = parseInt(document.getElementById('genMax').value);
+            document.getElementById('genResult').innerText = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    </script>
+</body>
+</html>

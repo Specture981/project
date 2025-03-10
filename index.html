@@ -1,166 +1,330 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SmartToolBox</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #fff;
-            margin: 0;
-        }
-        .header {
-            background-color: #8B4F0F;
-            padding: 15px;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .toolbar {
-            background-color: #8B4F0F;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        .toolbar button {
-            background-color: #E0A45E;
-            border: none;
-            padding: 10px 15px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .toolbar button:hover {
-            background-color: #d48f47;
-        }
-        .tool-title {
-            background-color: #8B4F0F;
-            color: white;
-            font-size: 20px;
-            padding: 10px;
-            margin-top: 10px;
-        }
-        .tool-container {
-            background-color: #ddd;
-            width: 80%;
-            height: 400px;
-            margin: 20px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: #000;
-            flex-direction: column;
-        }
-        input, button {
-            margin: 5px;
-            padding: 10px;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./culculator.css" />
+  </head>
+  <body>
+    <div id="app"></div>
     <div class="header">SmartToolBox</div>
     <div class="toolbar">
-        <button onclick="selectTool('calculator')">Калькулятор</button>
-        <button onclick="selectTool('timer')">Таймер</button>
-        <button onclick="selectTool('stopwatch')">Секундомер</button>
-        <button onclick="selectTool('cps')">CPS тест</button>
-        <button onclick="selectTool('counter')">Счетчик</button>
-        <button onclick="selectTool('converter')">Конвертер валют</button>
-        <button onclick="selectTool('generator')">Генератор чисел</button>
+      <button onclick="selectTool('calculator')">Калькулятор</button>
+      <button onclick="selectTool('timer')">Таймер</button>
+      <button onclick="selectTool('stopwatch')">Секундомер</button>
+      <button onclick="selectTool('cps')">CPS тест</button>
+      <button onclick="selectTool('counter')">Счетчик</button>
+      <button onclick="selectTool('generator')">Генератор чисел</button>
     </div>
-    <div class="tool-title" id="tool-title">(название выбранного инструмента)</div>
+    <div class="tool-title" id="tool-title">
+      (название выбранного инструмента)
+    </div>
     <div class="tool-container" id="tool-container">(Сам инструмент)</div>
-    
     <script>
-        let timerInterval;
-        let stopwatchInterval;
-        let stopwatchTime = 0;
-        let cpsCount = 0;
-        let cpsStart = false;
-        
-        function selectTool(tool) {
-            document.getElementById('tool-title').innerText = tool;
-            const container = document.getElementById('tool-container');
+      // ------- Код Калькулятора
+      const btnsModels = {
+        1: () => {},
+        2: () => {},
+        3: () => {},
+        4: () => {},
+        5: () => {},
+        6: () => {},
+        7: () => {},
+        8: () => {},
+        9: () => {},
+        "+": () => {},
+        "-": () => {},
+        "*": () => {},
+        "/": () => {},
+        C: () => {},
+        "=": () => {},
+      };
+
+      // Бокс с кнопками
+      const createBtnBox = () => {
+        const nodeBtnBox = document.createElement("div");
+        nodeBtnBox.classList.add("culculator__button-box");
+
+        const buttons = Object.entries(btnsModels).map((elem) => {
+          const node = document.createElement("button");
+          node.classList.add("culculator__button");
+          node.innerText = elem[0];
+          return node;
+        });
+
+        buttons.forEach((btn) => {
+          nodeBtnBox.appendChild(btn);
+        });
+
+        return {
+          nodeBtnBox,
+          buttons,
+        };
+      };
+
+      // Бокс с вводом
+      const createInputNode = () => {
+        const nodeInputBox = document.createElement("div");
+        nodeInputBox.classList.add("culculator__input-box");
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.readOnly = true;
+        nodeInputBox.appendChild(input);
+
+        return {
+          nodeInputBox,
+          input,
+        };
+      };
+
+      // Основной блок
+      const createAppNode = () => {
+        const appNode = document.createElement("div");
+        appNode.classList.add("culculator");
+
+        const { nodeInputBox, input } = createInputNode();
+        const { nodeBtnBox, buttons } = createBtnBox();
+
+        appNode.appendChild(nodeInputBox);
+        appNode.appendChild(nodeBtnBox);
+
+        return {
+          appNode,
+          input,
+          buttons,
+        };
+      };
+
+      const culculatorApp = () => {
+        const { appNode, input, buttons } = createAppNode();
+        return {
+          appNode,
+        };
+      };
+
+      const culculator = culculatorApp();
+      // ----- end
+
+      // ----- Код счетчика
+      const createCouterBox = () => {
+        let value = 0;
+
+        const nodeCounterBox = document.createElement("div");
+        nodeCounterBox.classList.add("counter");
+
+        const nodeValue = document.createElement("div");
+        nodeValue.innerText = value;
+        nodeValue.classList.add("counter__value");
+
+        const nodeBtnBox = document.createElement("div");
+        nodeBtnBox.classList.add("counter__button-box");
+
+        const btnCountUp = document.createElement("button");
+        btnCountUp.innerText = "+";
+
+        btnCountUp.addEventListener("click", () => {
+          value++;
+          nodeValue.innerText = value;
+        });
+
+        const btnCountDown = document.createElement("button");
+        btnCountDown.innerText = "-";
+        btnCountDown.addEventListener("click", () => {
+          value--;
+          nodeValue.innerText = value;
+        });
+
+        nodeBtnBox.appendChild(btnCountUp);
+        nodeBtnBox.appendChild(btnCountDown);
+
+        nodeCounterBox.appendChild(nodeValue);
+        nodeCounterBox.appendChild(nodeBtnBox);
+
+        return {
+          nodeCounterBox,
+        };
+      };
+      const counter = createCouterBox();
+      // ----- end
+
+      // ----- Код Таймера
+      const createTimerBox = () => {
+        let value = 0;
+
+        const nodeTimerBox = document.createElement("div");
+        nodeTimerBox.classList.add("timer");
+
+        const valueCount = document.createElement('div');
+        valueCount.classList.add('timer__value-count')
+        valueCount.classList.add("hide")
+
+        const input = document.createElement("input");
+        input.classList.add("timer__input");
+        input.placeholder = "Секунды";
+        input.type = "number";
+
+        const btnStart = document.createElement("button");
+        btnStart.innerText = "START";
+        btnStart.addEventListener("click", () => {
+          value = parseInt(input.value);
+          const timer = setInterval(function decrement() {
+          value--;
+          if (value <= 0) {
+            clearTimeout(timer);
+            alert("Время вышло");
             
-            if (tool === 'calculator') {
-                container.innerHTML = '<input id="calcInput" type="text" readonly><br>' +
-                    '<button onclick="calculate(1)">1</button><button onclick="calculate(2)">2</button>' +
-                    '<button onclick="calculate(3)">3</button><button onclick="calculate(\'+\')">+</button><br>' +
-                    '<button onclick="calculate(4)">4</button><button onclick="calculate(5)">5</button>' +
-                    '<button onclick="calculate(6)">6</button><button onclick="calculate(\'-\')">-</button><br>' +
-                    '<button onclick="calculate(7)">7</button><button onclick="calculate(8)">8</button>' +
-                    '<button onclick="calculate(9)">9</button><button onclick="calculate(\'*\')">*</button><br>' +
-                    '<button onclick="calculate(0)">0</button><button onclick="calculate(\'/\')">/</button>' +
-                    '<button onclick="clearCalc()">C</button><button onclick="evalCalc()">=</button>';
-            } else if (tool === 'counter') {
-                container.innerHTML = '<span id="count">0</span><br>' +
-                    '<button onclick="changeCount(1)">+1</button>' +
-                    '<button onclick="changeCount(-1)">-1</button>';
-            } else if (tool === 'timer') {
-                container.innerHTML = '<input id="timerInput" type="number" placeholder="Секунды"><br>' +
-                    '<button onclick="startTimer()">Старт</button>';
-            } else if (tool === 'stopwatch') {
-                container.innerHTML = '<span id="stopwatch">0</span><br>' +
-                    '<button onclick="startStopwatch()">Старт</button>' +
-                    '<button onclick="resetStopwatch()">Сброс</button>';
-            } else if (tool === 'cps') {
-                container.innerHTML = '<span id="cpsCount">0</span><br>' +
-                    '<button onclick="startCpsTest()">Кликни</button>';
-            } else if (tool === 'generator') {
-                container.innerHTML = '<input id="genMin" type="number" placeholder="Мин"><input id="genMax" type="number" placeholder="Макс"><br>' +
-                    '<button onclick="generateNumber()">Сгенерировать</button><br>' +
-                    '<span id="genResult"></span>';
-            }
-        }
+            input.value = ""
 
-        function startTimer() {
-            let seconds = parseInt(document.getElementById('timerInput').value);
-            timerInterval = setInterval(() => {
-                if (seconds > 0) {
-                    document.getElementById('tool-container').innerHTML = seconds;
-                    seconds--;
-                } else {
-                    clearInterval(timerInterval);
-                    alert('Время вышло!');
-                }
-            }, 1000);
+            btnStart.classList.remove('hide')
+            input.classList.remove('hide')
+            valueCount.classList.add('hide')
+          } else {
+            valueCount.innerText = value
+            btnStart.classList.add('hide')
+            input.classList.add('hide')
+            input.value = ""
+            valueCount.classList.remove('hide')
+          }
+        }, 1000);
+        });
+
+
+        nodeTimerBox.appendChild(valueCount)
+        nodeTimerBox.appendChild(input);
+        nodeTimerBox.appendChild(btnStart);
+
+        return {
+          nodeTimerBox,
+        };
+      };
+      const timer = createTimerBox();
+      // ----- end
+
+      // Код секундомера
+      const createStopWatchBox = () => {
+        let value = 0
+        let isStarted = false
+        let timer = null
+
+        const nodeStopWatchBox = document.createElement('div')
+        nodeStopWatchBox.classList.add('stop-watch')
+
+        const countValue = document.createElement('div')
+        countValue.classList.add('stop-watch__value')
+        countValue.innerText = value
+
+        const btnStart = document.createElement('button')
+        btnStart.innerText = 'START'
+        btnStart.classList.add('stop-watch__start')
+        btnStart.addEventListener('click', () => {
+            isStarted = !isStarted
+            if(isStarted) {
+                btnStart.innerText = 'STOP'
+                timer = setInterval(() => {
+                    value++
+                    countValue.innerText = value
+                }, 1000)
+            } else {
+                btnStart.innerText = 'START'
+                clearInterval(timer)
+            }
+            
+        })
+
+        const btnClaer = document.createElement('button')
+        btnClaer.innerText = 'CLEAR'
+        btnClaer.classList.add('stop-watch__clear')
+
+        btnClaer.addEventListener('click', () => {
+            value = 0
+            countValue.innerText = 0
+        })
+
+        nodeStopWatchBox.appendChild(countValue)
+        nodeStopWatchBox.appendChild(btnStart)
+        nodeStopWatchBox.appendChild(btnClaer)
+
+        return {
+            nodeStopWatchBox
         }
-        
-        function startStopwatch() {
-            stopwatchInterval = setInterval(() => {
-                stopwatchTime++;
-                document.getElementById('stopwatch').innerText = stopwatchTime;
-            }, 1000);
-        }
-        function resetStopwatch() {
-            clearInterval(stopwatchInterval);
-            stopwatchTime = 0;
-            document.getElementById('stopwatch').innerText = '0';
-        }
-        
-        function startCpsTest() {
-            if (!cpsStart) {
-                cpsStart = true;
-                cpsCount = 0;
+      }
+      const stopWatch = createStopWatchBox()
+      // ----- end
+
+      const createCPSTestBox = () => {
+        let value = 0
+        let isStarted = false
+
+        const nodeCPSTestBox = document.createElement('div')
+        nodeCPSTestBox.classList.add('cps-test')
+
+        const countValue = document.createElement('div')
+        countValue.classList.add('cps-test__value')
+        countValue.innerText = value
+
+        const button = document.createElement('button')
+        button.classList.add('cps-test__clicker')
+        button.innerText = 'START'
+
+        button.addEventListener('click', () => {
+            value++
+            countValue.innerText = value
+             button.innerText = 'CLICK'
+            if(isStarted === false) {
+                isStarted = true
                 setTimeout(() => {
-                    cpsStart = false;
-                    alert(`Ваш CPS: ${cpsCount / 5}`);
-                }, 5000);
+                    alert(`Ваш CPS: ${value / 5}`)
+                    isStarted = false
+                    value = 0
+                    countValue.innerText = value
+                     button.innerText = 'START'
+                }, 5000)
             }
-            cpsCount++;
-            document.getElementById('cpsCount').innerText = cpsCount;
-        }
+        })
 
-        function generateNumber() {
-            let min = parseInt(document.getElementById('genMin').value);
-            let max = parseInt(document.getElementById('genMax').value);
-            document.getElementById('genResult').innerText = Math.floor(Math.random() * (max - min + 1)) + min;
+        nodeCPSTestBox.appendChild(countValue)
+        nodeCPSTestBox.appendChild(button)
+
+        return {
+            nodeCPSTestBox
         }
+      }
+      const cpsTest = createCPSTestBox()
+      // --------- Код Меню
+      function selectTool(tool) {
+        document.getElementById("tool-title").innerText = tool;
+        const container = document.getElementById("tool-container");
+        container.innerHTML = "";
+
+        if (tool === "calculator") {
+          container.append(culculator.appNode);
+        } else if (tool === "counter") {
+          container.append(counter.nodeCounterBox);
+        } else if (tool === "timer") {
+          container.append(timer.nodeTimerBox);
+        } else if (tool === "stopwatch") {
+          container.append(stopWatch.nodeStopWatchBox)
+        } else if (tool === "cps") {
+          container.append(cpsTest.nodeCPSTestBox)
+        } else if (tool === "generator") {
+          container.innerHTML =
+            '<input id="genMin" type="number" placeholder="Мин"><input id="genMax" type="number" placeholder="Макс"><br>' +
+            '<button onclick="generateNumber()">Сгенерировать</button><br>' +
+            '<span id="genResult"></span>';
+        }
+      }
     </script>
-</body>
+    <script>
+
+      function generateNumber() {
+        let min = parseInt(document.getElementById("genMin").value);
+        let max = parseInt(document.getElementById("genMax").value);
+        document.getElementById("genResult").innerText =
+          Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+    </script>
+  </body>
 </html>

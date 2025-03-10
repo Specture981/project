@@ -1,0 +1,62 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #6a2f2f;
+  margin: 0;
+}
+.header {
+  background-color: #8b4f0f;
+  padding: 15px;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+.toolbar {
+  background-color: #8b4f0f;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.toolbar button {
+  background-color: #e0a45e;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.toolbar button:hover {
+  background-color: #d48f47;
+}
+.tool-title {
+  background-color: #8b4f0f;
+  color: white;
+  font-size: 20px;
+  padding: 10px;
+  margin-top: 10px;
+}
+.tool-container {
+  background-color: #ddd;
+  width: 80%;
+  height: 400px;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #000;
+  flex-direction: column;
+}
+input,
+button {
+  margin: 5px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.hide {
+  display: none;
+}
+
+@import url("./culculator.css");

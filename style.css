@@ -1,43 +1,43 @@
+:root {
+  --bg-win: #2b1c2a;
+  --bg-body: #848697;
+  --shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+  --color: #cbcbcb;
+}
+
 body {
   font-family: Arial, sans-serif;
+  color: var(--color);
   text-align: center;
-  background-color: #6a2f2f;
+  background-color: var(--bg-body);
   margin: 0;
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
-.header {
-  background-color: #8b4f0f;
-  padding: 15px;
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
-}
+
 .toolbar {
   background-color: #8b4f0f;
+  background-color: var(--bg-win);
+  box-shadow: var(--shadow);
   padding: 10px;
   display: flex;
   justify-content: center;
   gap: 10px;
 }
-.toolbar button {
-  background-color: #e0a45e;
-  border: none;
-  padding: 10px 15px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.toolbar button:hover {
-  background-color: #d48f47;
-}
+
 .tool-title {
-  background-color: #8b4f0f;
-  color: white;
+  background-color: var(--bg-win);
+  box-shadow: var(--shadow);
   font-size: 20px;
   padding: 10px;
   margin-top: 10px;
 }
 .tool-container {
-  background-color: #ddd;
+  background-color: var(--bg-win);
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   width: 80%;
   height: 400px;
   margin: 20px auto;
@@ -45,18 +45,38 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  color: #000;
   flex-direction: column;
-}
-input,
-button {
-  margin: 5px;
-  padding: 10px;
-  font-size: 16px;
 }
 
 .hide {
   display: none;
 }
+/* new css */
 
-@import url("./culculator.css");
+input,
+.button-app {
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  min-width: 50px;
+  max-height: 50px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.button-app {
+  cursor: pointer;
+  background: linear-gradient(90deg, #d93324 0%, #ec923a 100%);
+}
+
+.button-app :hover {
+  opacity: 0.8;
+  background-position: right center;
+}
+
+/* CSS */

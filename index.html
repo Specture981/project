@@ -4,19 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SmartToolBox</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./culculator.css" />
+    <link rel="stylesheet" href="./timer.css" />
+    <link rel="stylesheet" href="./menu.css" />
   </head>
   <body>
     <div id="app"></div>
     <div class="header">SmartToolBox</div>
     <div class="toolbar">
-      <button onclick="selectTool('calculator')">Калькулятор</button>
-      <button onclick="selectTool('timer')">Таймер</button>
-      <button onclick="selectTool('stopwatch')">Секундомер</button>
-      <button onclick="selectTool('cps')">CPS тест</button>
-      <button onclick="selectTool('counter')">Счетчик</button>
-      <button onclick="selectTool('generator')">Генератор чисел</button>
+      <button class="button-menu" onclick="selectTool('calculator')">
+        Калькулятор
+      </button>
+      <button class="button-menu" onclick="selectTool('timer')">Таймер</button>
+      <button class="button-menu" onclick="selectTool('stopwatch')">
+        Секундомер
+      </button>
+      <button class="button-menu" onclick="selectTool('cps')">CPS тест</button>
+      <button class="button-menu" onclick="selectTool('counter')">
+        Счетчик
+      </button>
+      <button class="button-menu" onclick="selectTool('generator')">
+        Генератор чисел
+      </button>
     </div>
     <div class="tool-title" id="tool-title">
       (название выбранного инструмента)
@@ -49,7 +66,7 @@
 
         const buttons = Object.entries(btnsModels).map((elem) => {
           const node = document.createElement("button");
-          node.classList.add("culculator__button");
+          node.classList.add("culculator__button", "button-app");
           node.innerText = elem[0];
           return node;
         });
@@ -123,6 +140,7 @@
         nodeBtnBox.classList.add("counter__button-box");
 
         const btnCountUp = document.createElement("button");
+        btnCountUp.classList.add("button-app");
         btnCountUp.innerText = "+";
 
         btnCountUp.addEventListener("click", () => {
@@ -132,6 +150,7 @@
 
         const btnCountDown = document.createElement("button");
         btnCountDown.innerText = "-";
+        btnCountDown.classList.add("button-app");
         btnCountDown.addEventListener("click", () => {
           value--;
           nodeValue.innerText = value;
@@ -157,9 +176,9 @@
         const nodeTimerBox = document.createElement("div");
         nodeTimerBox.classList.add("timer");
 
-        const valueCount = document.createElement('div');
-        valueCount.classList.add('timer__value-count')
-        valueCount.classList.add("hide")
+        const valueCount = document.createElement("div");
+        valueCount.classList.add("timer__value-count");
+        valueCount.classList.add("hide");
 
         const input = document.createElement("input");
         input.classList.add("timer__input");
@@ -168,31 +187,31 @@
 
         const btnStart = document.createElement("button");
         btnStart.innerText = "START";
+        btnStart.classList.add("button-app");
         btnStart.addEventListener("click", () => {
           value = parseInt(input.value);
           const timer = setInterval(function decrement() {
-          value--;
-          if (value <= 0) {
-            clearTimeout(timer);
-            alert("Время вышло");
-            
-            input.value = ""
+            value--;
+            if (value <= 0) {
+              clearTimeout(timer);
+              alert("Время вышло");
 
-            btnStart.classList.remove('hide')
-            input.classList.remove('hide')
-            valueCount.classList.add('hide')
-          } else {
-            valueCount.innerText = value
-            btnStart.classList.add('hide')
-            input.classList.add('hide')
-            input.value = ""
-            valueCount.classList.remove('hide')
-          }
-        }, 1000);
+              input.value = "";
+
+              btnStart.classList.remove("hide");
+              input.classList.remove("hide");
+              valueCount.classList.add("hide");
+            } else {
+              valueCount.innerText = value;
+              btnStart.classList.add("hide");
+              input.classList.add("hide");
+              input.value = "";
+              valueCount.classList.remove("hide");
+            }
+          }, 1000);
         });
 
-
-        nodeTimerBox.appendChild(valueCount)
+        nodeTimerBox.appendChild(valueCount);
         nodeTimerBox.appendChild(input);
         nodeTimerBox.appendChild(btnStart);
 
@@ -205,94 +224,94 @@
 
       // Код секундомера
       const createStopWatchBox = () => {
-        let value = 0
-        let isStarted = false
-        let timer = null
+        let value = 0;
+        let isStarted = false;
+        let timer = null;
 
-        const nodeStopWatchBox = document.createElement('div')
-        nodeStopWatchBox.classList.add('stop-watch')
+        const nodeStopWatchBox = document.createElement("div");
+        nodeStopWatchBox.classList.add("stop-watch");
 
-        const countValue = document.createElement('div')
-        countValue.classList.add('stop-watch__value')
-        countValue.innerText = value
+        const countValue = document.createElement("div");
+        countValue.classList.add("stop-watch__value");
+        countValue.innerText = value;
 
-        const btnStart = document.createElement('button')
-        btnStart.innerText = 'START'
-        btnStart.classList.add('stop-watch__start')
-        btnStart.addEventListener('click', () => {
-            isStarted = !isStarted
-            if(isStarted) {
-                btnStart.innerText = 'STOP'
-                timer = setInterval(() => {
-                    value++
-                    countValue.innerText = value
-                }, 1000)
-            } else {
-                btnStart.innerText = 'START'
-                clearInterval(timer)
-            }
-            
-        })
+        const btnStart = document.createElement("button");
+        btnStart.innerText = "START";
+        btnStart.classList.add("stop-watch__start", "button-app");
+        btnStart.addEventListener("click", () => {
+          isStarted = !isStarted;
+          if (isStarted) {
+            btnStart.innerText = "STOP";
+            timer = setInterval(() => {
+              value++;
+              countValue.innerText = value;
+            }, 1000);
+          } else {
+            btnStart.innerText = "START";
+            clearInterval(timer);
+          }
+        });
 
-        const btnClaer = document.createElement('button')
-        btnClaer.innerText = 'CLEAR'
-        btnClaer.classList.add('stop-watch__clear')
+        const btnClaer = document.createElement("button");
+        btnClaer.innerText = "CLEAR";
+        btnClaer.classList.add("stop-watch__clear", "button-app");
 
-        btnClaer.addEventListener('click', () => {
-            value = 0
-            countValue.innerText = 0
-        })
+        btnClaer.addEventListener("click", () => {
+          value = 0;
+          countValue.innerText = 0;
+        });
 
-        nodeStopWatchBox.appendChild(countValue)
-        nodeStopWatchBox.appendChild(btnStart)
-        nodeStopWatchBox.appendChild(btnClaer)
+        nodeStopWatchBox.appendChild(countValue);
+        nodeStopWatchBox.appendChild(btnStart);
+        nodeStopWatchBox.appendChild(btnClaer);
 
         return {
-            nodeStopWatchBox
-        }
-      }
-      const stopWatch = createStopWatchBox()
+          nodeStopWatchBox,
+        };
+      };
+      const stopWatch = createStopWatchBox();
       // ----- end
-
+      // ----- Код CPS Test
       const createCPSTestBox = () => {
-        let value = 0
-        let isStarted = false
+        let value = 0;
+        let isStarted = false;
 
-        const nodeCPSTestBox = document.createElement('div')
-        nodeCPSTestBox.classList.add('cps-test')
+        const nodeCPSTestBox = document.createElement("div");
+        nodeCPSTestBox.classList.add("cps-test");
 
-        const countValue = document.createElement('div')
-        countValue.classList.add('cps-test__value')
-        countValue.innerText = value
+        const countValue = document.createElement("div");
+        countValue.classList.add("cps-test__value");
+        countValue.innerText = value;
 
-        const button = document.createElement('button')
-        button.classList.add('cps-test__clicker')
-        button.innerText = 'START'
+        const button = document.createElement("button");
+        button.classList.add("cps-test__clicker", "button-app");
+        button.innerText = "START";
 
-        button.addEventListener('click', () => {
-            value++
-            countValue.innerText = value
-             button.innerText = 'CLICK'
-            if(isStarted === false) {
-                isStarted = true
-                setTimeout(() => {
-                    alert(`Ваш CPS: ${value / 5}`)
-                    isStarted = false
-                    value = 0
-                    countValue.innerText = value
-                     button.innerText = 'START'
-                }, 5000)
-            }
-        })
+        button.addEventListener("click", () => {
+          value++;
+          countValue.innerText = value;
+          button.innerText = "CLICK";
+          if (isStarted === false) {
+            isStarted = true;
+            setTimeout(() => {
+              alert(`Ваш CPS: ${value / 5}`);
+              isStarted = false;
+              value = 0;
+              countValue.innerText = value;
+              button.innerText = "START";
+            }, 5000);
+          }
+        });
 
-        nodeCPSTestBox.appendChild(countValue)
-        nodeCPSTestBox.appendChild(button)
+        nodeCPSTestBox.appendChild(countValue);
+        nodeCPSTestBox.appendChild(button);
 
         return {
-            nodeCPSTestBox
-        }
-      }
-      const cpsTest = createCPSTestBox()
+          nodeCPSTestBox,
+        };
+      };
+      const cpsTest = createCPSTestBox();
+      // ---- end
       // --------- Код Меню
       function selectTool(tool) {
         document.getElementById("tool-title").innerText = tool;
@@ -306,9 +325,9 @@
         } else if (tool === "timer") {
           container.append(timer.nodeTimerBox);
         } else if (tool === "stopwatch") {
-          container.append(stopWatch.nodeStopWatchBox)
+          container.append(stopWatch.nodeStopWatchBox);
         } else if (tool === "cps") {
-          container.append(cpsTest.nodeCPSTestBox)
+          container.append(cpsTest.nodeCPSTestBox);
         } else if (tool === "generator") {
           container.innerHTML =
             '<input id="genMin" type="number" placeholder="Мин"><input id="genMax" type="number" placeholder="Макс"><br>' +
@@ -318,7 +337,6 @@
       }
     </script>
     <script>
-
       function generateNumber() {
         let min = parseInt(document.getElementById("genMin").value);
         let max = parseInt(document.getElementById("genMax").value);

@@ -10,15 +10,17 @@
       href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap"
       rel="stylesheet"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./culculator.css" />
-    <link rel="stylesheet" href="./timer.css" />
     <link rel="stylesheet" href="./menu.css" />
+    <link rel="stylesheet" href="./button-app.css" />
   </head>
   <body>
     <div id="app"></div>
-    <div class="header">SmartToolBox</div>
+    <div class="header">Smart Tool Box</div>
     <div class="toolbar">
       <!-- <button class="button-menu" onclick="selectTool('calculator')">
         Калькулятор
@@ -35,96 +37,9 @@
         Генератор чисел
       </button>
     </div>
-    <div class="tool-title" id="tool-title">
-      (название выбранного инструмента)
-    </div>
-    <div class="tool-container" id="tool-container">(Сам инструмент)</div>
+    <div class="tool-title" id="tool-title"></div>
+    <div class="tool-container" id="tool-container">Выберете инструмент</div>
     <script>
-      // ------- Код Калькулятора
-      const btnsModels = {
-        1: () => {},
-        2: () => {},
-        3: () => {},
-        4: () => {},
-        5: () => {},
-        6: () => {},
-        7: () => {},
-        8: () => {},
-        9: () => {},
-        "+": () => {},
-        "-": () => {},
-        "*": () => {},
-        "/": () => {},
-        C: () => {},
-        "=": () => {},
-      };
-
-      // Бокс с кнопками
-      const createBtnBox = () => {
-        const nodeBtnBox = document.createElement("div");
-        nodeBtnBox.classList.add("culculator__button-box");
-
-        const buttons = Object.entries(btnsModels).map((elem) => {
-          const node = document.createElement("button");
-          node.classList.add("culculator__button", "button-app");
-          node.innerText = elem[0];
-          return node;
-        });
-
-        buttons.forEach((btn) => {
-          nodeBtnBox.appendChild(btn);
-        });
-
-        return {
-          nodeBtnBox,
-          buttons,
-        };
-      };
-
-      // Бокс с вводом
-      const createInputNode = () => {
-        const nodeInputBox = document.createElement("div");
-        nodeInputBox.classList.add("culculator__input-box");
-
-        const input = document.createElement("input");
-        input.type = "text";
-        input.readOnly = true;
-        nodeInputBox.appendChild(input);
-
-        return {
-          nodeInputBox,
-          input,
-        };
-      };
-
-      // Основной блок
-      const createAppNode = () => {
-        const appNode = document.createElement("div");
-        appNode.classList.add("culculator");
-
-        const { nodeInputBox, input } = createInputNode();
-        const { nodeBtnBox, buttons } = createBtnBox();
-
-        appNode.appendChild(nodeInputBox);
-        appNode.appendChild(nodeBtnBox);
-
-        return {
-          appNode,
-          input,
-          buttons,
-        };
-      };
-
-      const culculatorApp = () => {
-        const { appNode, input, buttons } = createAppNode();
-        return {
-          appNode,
-        };
-      };
-
-      const culculator = culculatorApp();
-      // ----- end
-
       // ----- Код счетчика
       const createCouterBox = () => {
         let value = 0;
@@ -134,7 +49,7 @@
 
         const nodeValue = document.createElement("div");
         nodeValue.innerText = value;
-        nodeValue.classList.add("counter__value");
+        nodeValue.classList.add("counter__value", "value");
 
         const nodeBtnBox = document.createElement("div");
         nodeBtnBox.classList.add("counter__button-box");
@@ -177,7 +92,7 @@
         nodeTimerBox.classList.add("timer");
 
         const valueCount = document.createElement("div");
-        valueCount.classList.add("timer__value-count");
+        valueCount.classList.add("timer__value-count", "value");
         valueCount.classList.add("hide");
 
         const input = document.createElement("input");
@@ -232,7 +147,7 @@
         nodeStopWatchBox.classList.add("stop-watch");
 
         const countValue = document.createElement("div");
-        countValue.classList.add("stop-watch__value");
+        countValue.classList.add("stop-watch__value", "value");
         countValue.innerText = value;
 
         const btnStart = document.createElement("button");
@@ -271,6 +186,7 @@
       };
       const stopWatch = createStopWatchBox();
       // ----- end
+
       // ----- Код CPS Test
       const createCPSTestBox = () => {
         let value = 0;
@@ -280,7 +196,7 @@
         nodeCPSTestBox.classList.add("cps-test");
 
         const countValue = document.createElement("div");
-        countValue.classList.add("cps-test__value");
+        countValue.classList.add("cps-test__value", "value");
         countValue.innerText = value;
 
         const button = document.createElement("button");
@@ -312,15 +228,73 @@
       };
       const cpsTest = createCPSTestBox();
       // ---- end
+
+      // ----- Код генератор чисел
+      const createGenerator = () => {
+        let value = 0;
+
+        const nodeGeneratorBox = document.createElement("div");
+        nodeGeneratorBox.classList.add("genetator");
+
+        const inputMin = document.createElement("input");
+        inputMin.classList.add("generator__elem");
+        inputMin.placeholder = "Min";
+        inputMin.type = "number";
+
+        const inputMax = document.createElement("input");
+        inputMax.classList.add("generator__elem");
+        inputMax.placeholder = "Max";
+        inputMax.type = "number";
+
+        const button = document.createElement("button");
+        button.classList.add("button-app", "generator__elem");
+        button.innerText = "Генерировать";
+
+        const valueElem = document.createElement("div");
+        valueElem.classList.add("value", "generator__elem");
+        valueElem.innerText = "";
+
+        button.addEventListener("click", () => {
+          const min = parseInt(inputMin.value);
+          const max = parseInt(inputMax.value);
+          if (min.toString() == "NaN" || max.toString() == "NaN") {
+            valueElem.innerText = "Error";
+          } else if (min > max) {
+            valueElem.innerText = "Error";
+          } else {
+            valueElem.innerText = Math.floor(
+              Math.random() * (max - min + 1) + min
+            );
+          }
+
+          console.log(min, max);
+        });
+
+        nodeGeneratorBox.appendChild(inputMin);
+        nodeGeneratorBox.appendChild(inputMax);
+        nodeGeneratorBox.appendChild(button);
+        nodeGeneratorBox.appendChild(valueElem);
+
+        return {
+          nodeGeneratorBox,
+        };
+      };
+
+      const generator = createGenerator();
       // --------- Код Меню
       function selectTool(tool) {
-        document.getElementById("tool-title").innerText = tool;
+        const mapToolName = {
+          counter: "Счетчик",
+          timer: "Таймер",
+          stopwatch: "Секундомер",
+          cps: "CPS Тест",
+          generator: "Генератор чисер",
+        };
+        document.getElementById("tool-title").innerText = mapToolName[tool];
         const container = document.getElementById("tool-container");
         container.innerHTML = "";
 
-        if (tool === "calculator") {
-          container.append(culculator.appNode);
-        } else if (tool === "counter") {
+        if (tool === "counter") {
           container.append(counter.nodeCounterBox);
         } else if (tool === "timer") {
           container.append(timer.nodeTimerBox);
@@ -329,19 +303,8 @@
         } else if (tool === "cps") {
           container.append(cpsTest.nodeCPSTestBox);
         } else if (tool === "generator") {
-          container.innerHTML =
-            '<input id="genMin" type="number" placeholder="Мин"><input id="genMax" type="number" placeholder="Макс"><br>' +
-            '<button onclick="generateNumber()">Сгенерировать</button><br>' +
-            '<span id="genResult"></span>';
+          container.append(generator.nodeGeneratorBox);
         }
-      }
-    </script>
-    <script>
-      function generateNumber() {
-        let min = parseInt(document.getElementById("genMin").value);
-        let max = parseInt(document.getElementById("genMax").value);
-        document.getElementById("genResult").innerText =
-          Math.floor(Math.random() * (max - min + 1)) + min;
       }
     </script>
   </body>

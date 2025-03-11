@@ -7,7 +7,6 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
   color: var(--color);
   text-align: center;
   background-color: var(--bg-body);
@@ -31,7 +30,7 @@ body {
 .tool-title {
   background-color: var(--bg-win);
   box-shadow: var(--shadow);
-  font-size: 20px;
+  font-size: 35px;
   padding: 10px;
   margin-top: 10px;
 }
@@ -52,32 +51,45 @@ body {
 .hide {
   display: none;
 }
-/* new css */
 
-input,
-.button-app {
+input {
   font-family: "Pixelify Sans", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   border-radius: 10px;
-  margin: 5px;
+  margin: 20px;
   padding: 10px;
   font-size: 16px;
+  line-height: 40px;
   border: none;
   outline: none;
-  min-width: 50px;
-  max-height: 50px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
-.button-app {
-  cursor: pointer;
-  background: linear-gradient(90deg, #d93324 0%, #ec923a 100%);
+.value {
+  font-size: 60px;
 }
 
-.button-app :hover {
-  opacity: 0.8;
-  background-position: right center;
+.value-min {
+    font-size: 45px;
 }
 
-/* CSS */
+.genetator {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: var(--bg-win);
+    color: #fff;
+    filter: brightness(110%);
+    text-shadow: 0 0 5px #fff, 0 0 6px #fff, 0 0 3px #fff, 0 0 2px #e91e63,
+    0 0 4px #e91e63, 0 0 16px #e91e63, 0 0 50px #e91e63, 0 0 6px #e91e63;
+    animation: pink 1.5s ease-in-out infinite alternate;
+    font-size: 60px;
+}
+@media (max-width: 680px) {
+    .header {
+        font-size: 40px;
+    }
+}

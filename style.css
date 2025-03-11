@@ -2,6 +2,7 @@
   --bg-win: #2b1c2a;
   --bg-body: #848697;
   --shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background-image: url(https://i.pinimg.com/originals/1d/8e/48/1d8e488b78fee7d06da609c097ea5e0a.jpg)
 
   --color: #cbcbcb;
 }
@@ -15,6 +16,7 @@ body {
   font-family: "Pixelify Sans", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  background-image: url(https://i.pinimg.com/originals/1d/8e/48/1d8e488b78fee7d06da609c097ea5e0a.jpg)
 }
 
 .toolbar {
